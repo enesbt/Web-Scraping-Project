@@ -8,14 +8,21 @@ import time
 
 
 class Scraping:
-    def __init__(self,url) -> None:
+    def __init__(self,url,product) -> None:
         self.url = url
         self.html=''
+        self.product = product
 
     def start(self):
         driver = webdriver.Chrome()
         driver.get(self.url)
         driver.maximize_window()
+        searchbar=driver.find_element(By.XPATH,"//*[@id='sfx-discovery-search-suggestions']/div/div/input")
+        time.sleep(1)
+        searchbar.click()
+        searchbar.send_keys(self.product)
+        time.sleep(1)
+        searchbar.send_keys(Keys.ENTER)
         time.sleep(2)
         a = 0   #scroll size
         b = 200
